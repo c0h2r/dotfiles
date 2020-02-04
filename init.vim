@@ -95,6 +95,9 @@ let g:startify_custom_header = [
 "highlight Comment cterm=italic gui=italic
 "q
 colorscheme jellybeans
+set mouse=a
+map <ScrollWheelUp> <C-Y>
+map <ScrollWheelDown> <C-E>
 "set guifont=Fira_Code:h12
 "на маке vim?
 "if has("mac")
@@ -302,3 +305,4 @@ autocmd FileType python set completeopt-=preview " раскомментируй�
 "" --- CSS ---
 "autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 "autocmd FileType css setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4
+:set cc=
