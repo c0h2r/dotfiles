@@ -9,6 +9,7 @@ set encoding=utf8
 call plug#begin(stdpath('data') . '/plugged')
 Plug 'scrooloose/nerdtree',{'on': 'NERDTreeToggle'}
 Plug 'nanotech/jellybeans.vim'  "theme
+Plug 'dylanaraps/wal.vim'       "pywal theme
 Plug 'vim-airline/vim-airline' 
 Plug 'ycm-core/YouCompleteMe' 
 Plug 'garbas/vim-snipmate'		" Snippets manager
@@ -32,36 +33,30 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'vim-scripts/SingleCompile'
 Plug 'mhinz/vim-startify'
 Plug 'vim-syntastic/syntastic'
+Plug 'lyokha/vim-xkbswitch' "auto layout switching
+Plug 'skammer/vim-css-color'
+"LaTeX
+"Plug 'lervag/vimtex'
+"Plug 'xuhdev/vim-latex-live-preview', { 'for': 'tex' }
+Plug 'donRaphaco/neotex', { 'for': 'tex' }
+
 call plug#end() 
+set lazyredraw
+set smartcase
+set undofile
 let g:rainbow_active = 1
+let g:XkbSwitchEnabled = 1
 let g:startify_fortune_use_unicode = 1
 let g:startify_custom_header = [
-\ 'NNNNNNNN        NNNNNNNN                                  VVVVVVVV           VVVVVVVV iiii                          ', 
-\ 'N:::::::N       N::::::N                                  V::::::V           V::::::Vi::::i                         ', 
-\ 'N::::::::N      N::::::N                                  V::::::V           V::::::V iiii                          ',
-\ 'N:::::::::N     N::::::N                                  V::::::V           V::::::V                               ',
-\ 'N::::::::::N    N::::::N    eeeeeeeeeeee       ooooooooooo V:::::V           V:::::Viiiiiii    mmmmmmm    mmmmmmm   ',
-\ 'N:::::::::::N   N::::::N  ee::::::::::::ee   oo:::::::::::ooV:::::V         V:::::V i:::::i  mm:::::::m  m:::::::mm ',
-\ 'N:::::::N::::N  N::::::N e::::::eeeee:::::eeo:::::::::::::::oV:::::V       V:::::V   i::::i m::::::::::mm::::::::::m',
-\ 'N::::::N N::::N N::::::Ne::::::e     e:::::eo:::::ooooo:::::o V:::::V     V:::::V    i::::i m::::::::::::::::::::::m',
-\ 'N::::::N  N::::N:::::::Ne:::::::eeeee::::::eo::::o     o::::o  V:::::V   V:::::V     i::::i m:::::mmm::::::mmm:::::m',
-\ 'N::::::N   N:::::::::::Ne:::::::::::::::::e o::::o     o::::o   V:::::V V:::::V      i::::i m::::m   m::::m   m::::m',
-\ 'N::::::N    N::::::::::Ne::::::eeeeeeeeeee  o::::o     o::::o    V:::::V:::::V       i::::i m::::m   m::::m   m::::m',
-\ 'N::::::N     N:::::::::Ne:::::::e           o::::o     o::::o     V:::::::::V        i::::i m::::m   m::::m   m::::m',
-\ 'N::::::N      N::::::::Ne::::::::e          o:::::ooooo:::::o      V:::::::V        i::::::im::::m   m::::m   m::::m',
-\ 'N::::::N       N:::::::N e::::::::eeeeeeee  o:::::::::::::::o       V:::::V         i::::::im::::m   m::::m   m::::m',
-\ 'N::::::N        N::::::N  ee:::::::::::::e   oo:::::::::::oo         V:::V          i::::::im::::m   m::::m   m::::m',
-\ 'NNNNNNNN         NNNNNNN    eeeeeeeeeeeeee     ooooooooooo            VVV           iiiiiiiimmmmmm   mmmmmm   mmmmmm',
+\ ' ████     ██                  ██      ██ ██            ', 
+\ '░██░██   ░██                 ░██     ░██░░             ', 
+\ '░██░░██  ░██  █████   ██████ ░██     ░██ ██ ██████████ ',
+\ '░██ ░░██ ░██ ██░░░██ ██░░░░██░░██    ██ ░██░░██░░██░░██',
+\ '░██  ░░██░██░███████░██   ░██ ░░██  ██  ░██ ░██ ░██ ░██',
+\ '░██   ░░████░██░░░░ ░██   ░██  ░░████   ░██ ░██ ░██ ░██',
+\ '░██    ░░███░░██████░░██████    ░░██    ░██ ███ ░██ ░██',
+\ '░░      ░░░  ░░░░░░  ░░░░░░      ░░     ░░ ░░░  ░░  ░░ ',
 \ ]
-"[
-"            \ '                                 ________  __ __        ',
-"            \ '            __                  /\_____  \/\ \\ \       ',
-"            \ '    __  __ /\_\    ___ ___      \/___//''/''\ \ \\ \    ',
-"            \ '   /\ \/\ \\/\ \ /'' __` __`\        /'' /''  \ \ \\ \_ ',
-"            \ '   \ \ \_/ |\ \ \/\ \/\ \/\ \      /'' /''__  \ \__ ,__\',
-"            \ '    \ \___/  \ \_\ \_\ \_\ \_\    /\_/ /\_\  \/_/\_\_/  ',
-"            \ '     \/__/    \/_/\/_/\/_/\/_/    \//  \/_/     \/_/    ',
-"            \ ]
 "=====================================================
 " General settings
 "=====================================================
@@ -94,10 +89,13 @@ let g:startify_custom_header = [
 "colorscheme one
 "highlight Comment cterm=italic gui=italic
 "q
-colorscheme jellybeans
+"colorscheme jellybeans
+colorscheme wal
+hi Normal guibg=NONE ctermbg=NONE
 set mouse=a
 map <ScrollWheelUp> <C-Y>
 map <ScrollWheelDown> <C-E>
+let g:livepreview_previewer = 'zathura'
 "set guifont=Fira_Code:h12
 "на маке vim?
 "if has("mac")
@@ -181,8 +179,8 @@ let g:snippets_dir = "~/.vim/vim-snippets/snippets"
 "
 "" настройки Vim-Airline
 ""set laststatus=2
-""let g:airline_theme='badwolf'
-let g:airline_theme='one'
+"let g:airline_theme='badwolf'
+let g:airline_theme='wal'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
